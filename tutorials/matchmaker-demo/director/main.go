@@ -22,7 +22,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	"google.golang.org/grpc"
 	"open-match.dev/open-match/pkg/pb"
 )
@@ -37,7 +36,7 @@ const (
 	functionHostName       = "mm-demo-matchfunction.mm-demo.svc.cluster.local"
 	functionPort     int32 = 50502
 
-	tickDuration = 5*time.Second
+	tickDuration = 5 * time.Second
 )
 
 func main() {
@@ -107,7 +106,7 @@ func fetch(be pb.BackendServiceClient, p *pb.MatchProfile) ([]*pb.Match, error) 
 		Profile: p,
 	}
 
-	stream, err := be.FetchMatches(context.Background(), req, grpc_retry.WithMax(5))
+	stream, err := be.FetchMatches(context.Background(), req)
 	if err != nil {
 		log.Println()
 		return nil, err
